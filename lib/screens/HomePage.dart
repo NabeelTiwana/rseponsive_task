@@ -89,10 +89,87 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Spacer(),
-                    TextButton(onPressed: (){}, child: Text('See all'),),
+                    TextButton(onPressed: () {}, child: Text('See all')),
                   ],
                 ),
-
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 340,
+                      height: 225,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: 150,
+                            height: 220,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Image.asset(
+                                      'assets/images/products/product.png',
+                                      width: 120,
+                                    ),
+                                  ),
+                                  Text(
+                                    'BEST SELLER',
+                                    style: TextStyle(color: Colors.deepPurple),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Nike Jordan',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '\$493.00',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Container(
+                                        width: 40,
+                                        height: 49,
+                                        decoration: BoxDecoration(
+                                          color: Colors.indigo,
+                                          borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(20),
+                                            topLeft: Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
