@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:responsive_task/constent/images.dart';
 
 import '../shape/custom_shape.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +38,61 @@ class HomePage extends StatelessWidget {
                       width: 300,
                       height: 50,
                       child: ListView.builder(
-                        itemCount: 7,
+                        itemCount: MyImage.allLogos.length,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return Container(
-                            width: 50,
-                            height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 5),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                             shape: BoxShape.circle,
+                          bool isSelected = index == selectedIndex;
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? Colors.deepPurple
+                                    : Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: SvgPicture.asset(
+                                  MyImage.allLogos[index],
+                                  fit: BoxFit.contain,
+                                  colorFilter: ColorFilter.mode(
+                                    isSelected ? Colors.white : Colors.black,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                              ),
                             ),
-                            child: Padding(padding: EdgeInsets.all(5.0),child: Image.asset(),),
                           );
                         },
                       ),
                     ),
                   ],
                 ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    Text(
+                      'Popular Shoes',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(),
+                    TextButton(onPressed: (){}, child: Text('See all'),),
+                  ],
+                ),
+
               ],
             ),
           ),
