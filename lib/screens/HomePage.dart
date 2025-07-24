@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_task/constent/images.dart';
+import 'package:responsive_task/responsive/responsive_helper.dart';
+import 'package:responsive_task/responsive/responsive_text_style.dart';
+import 'package:responsive_task/responsive/responsive_widget.dart';
 
 import '../shape/custom_shape.dart';
 
@@ -18,24 +21,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: Color(0xffefefe5),
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          color: Color(0xffefefe5),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                MyAppbar(),
-                SizedBox(height: 10),
-                MyBanner(),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 300,
+          color: const Color(0xffefefe5),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: context.allPadding,
+              child: Column(
+                children: [
+                  const MyAppbar(),
+                  SizedBox(height: context.smallSpacing),
+                  const MyBanner(),
+                  SizedBox(height: context.smallSpacing),
+                  Center(
+                    child: SizedBox(
+                      width: ResponsiveHelper.getValue(
+                        context,
+                        mobile: 300,
+                        tablet: 400,
+                        desktop: 500,
+                      ),
                       height: 50,
                       child: ListView.builder(
                         itemCount: MyImage.allLogos.length,
@@ -52,7 +58,8 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               width: 50,
                               height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: context.smallSpacing / 2),
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? Colors.deepPurple
@@ -75,102 +82,123 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 15),
-                Row(
-                  children: [
-                    Text(
-                      'Popular Shoes',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Spacer(),
-                    TextButton(onPressed: () {}, child: Text('See all')),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 340,
-                      height: 225,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            width: 150,
-                            height: 220,
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
+                  ),
+                  SizedBox(height: context.mediumSpacing),
+                  Padding(
+                    padding: context.horizontalPadding,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Popular Shoes',
+                          style: context.responsiveTitleLarge.copyWith(
+                            color: Colors.black,
+                          ),
+                        ),
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'See all',
+                            style: context.responsiveBodyMedium.copyWith(
+                              color: Colors.deepPurple,
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Image.asset(
-                                      'assets/images/products/product.png',
-                                      width: 120,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: context.smallSpacing),
+                  SizedBox(
+                    width: double.infinity,
+                    height: ResponsiveHelper.getValue(
+                      context,
+                      mobile: 225,
+                      tablet: 250,
+                      desktop: 300,
+                    ),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      padding: context.horizontalPadding,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: ResponsiveHelper.getValue(
+                            context,
+                            mobile: 150,
+                            tablet: 180,
+                            desktop: 200,
+                          ),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: context.smallSpacing),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: Image.asset(
+                                    'assets/images/products/product.png',
+                                    width: ResponsiveHelper.getValue(
+                                      context,
+                                      mobile: 120,
+                                      tablet: 140,
+                                      desktop: 160,
                                     ),
                                   ),
-                                  Text(
-                                    'BEST SELLER',
-                                    style: TextStyle(color: Colors.deepPurple),
+                                ),
+                                Text(
+                                  'BEST SELLER',
+                                  style: context.responsiveBodySmall.copyWith(
+                                    color: Colors.deepPurple,
                                   ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    'Nike Jordan',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
+                                ),
+                                SizedBox(height: context.smallSpacing / 2),
+                                Text(
+                                  'Nike Jordan',
+                                  style: context.responsiveBodyLarge.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '\$493.00',
+                                      style: context.responsiveBodyLarge.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '\$493.00',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
+                                    const Spacer(),
+                                    Container(
+                                      width: 40,
+                                      height: 49,
+                                      decoration: BoxDecoration(
+                                        color: Colors.indigo,
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(20),
+                                          topLeft: Radius.circular(20),
                                         ),
                                       ),
-                                      Spacer(),
-                                      Container(
-                                        width: 40,
-                                        height: 49,
-                                        decoration: BoxDecoration(
-                                          color: Colors.indigo,
-                                          borderRadius: BorderRadius.only(
-                                            bottomRight: Radius.circular(20),
-                                            topLeft: Radius.circular(20),
-                                          ),
-                                        ),
-                                        child: Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                        ),
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: Colors.white,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -184,11 +212,26 @@ class MyBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ResponsiveWidget(
+      mobile: _BannerContent(scaleFactor: 1.0),
+      tablet: _BannerContent(scaleFactor: 1.2),
+      desktop: _BannerContent(scaleFactor: 1.5),
+    );
+  }
+}
+
+class _BannerContent extends StatelessWidget {
+  final double scaleFactor;
+
+  const _BannerContent({required this.scaleFactor});
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
           width: double.infinity,
-          height: 200,
+          height: 200 * scaleFactor,
           decoration: BoxDecoration(
             color: Colors.deepOrange,
             borderRadius: BorderRadius.circular(20),
@@ -198,7 +241,7 @@ class MyBanner extends StatelessWidget {
           clipper: CustomStraightClipper(),
           child: Container(
             width: double.infinity,
-            height: 200,
+            height: 200 * scaleFactor,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -206,58 +249,62 @@ class MyBanner extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(20 * scaleFactor),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               RichText(
                 text: TextSpan(
                   text: '50% ',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                  style: context.responsiveHeadlineLarge.copyWith(
                     color: Colors.deepOrange,
                   ),
                   children: [
                     TextSpan(
                       text: 'Discount',
-                      style: TextStyle(
+                      style: context.responsiveHeadlineMedium.copyWith(
                         color: Colors.deepOrange,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
               Text(
-                'End of Sesin',
-                style: TextStyle(
+                'End of Season',
+                style: context.responsiveTitleLarge.copyWith(
                   color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 5 * scaleFactor),
               Text(
                 'More Style added Sale\nending soon',
-                style: TextStyle(color: Colors.black38),
+                style: context.responsiveBodyMedium.copyWith(
+                  color: Colors.black38,
+                ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 5 * scaleFactor),
               ElevatedButton(
                 onPressed: () {},
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                child: Text('Shop now', style: TextStyle(color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black),
+                child: Text(
+                  'Shop now',
+                  style: context.responsiveBodyMedium.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),
         ),
         Positioned(
-          top: -10,
-          left: 0,
-          right: -160,
+          right: -12 * scaleFactor,
           bottom: 0,
-          child: Image.asset('assets/images/banner/product.png'),
+          child: Image.asset(
+            'assets/images/banner/product.png',
+            width: 200 * scaleFactor,
+            fit: BoxFit.contain,
+          ),
         ),
       ],
     );
@@ -269,28 +316,29 @@ class MyAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(1000),
+    return Padding(
+      padding: context.horizontalPadding,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(1000),
+            ),
+            child: Icon(Icons.search, color: Colors.grey, size: 24),
           ),
-          child: Icon(Icons.search, color: Colors.grey, size: 24),
-        ),
-        Text(
-          'BRANDSDEKHO.AI',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          Text(
+            'BRANDSDEKHO.AI',
+            style: context.responsiveTitleLarge.copyWith(
+              color: Colors.black,
+            ),
           ),
-        ),
-        Icon(Icons.notifications_none, color: Colors.indigo, size: 24),
-      ],
+          Icon(Icons.notifications_none, color: Colors.indigo, size: 24),
+        ],
+      ),
     );
   }
 }
